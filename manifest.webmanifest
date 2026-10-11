@@ -1,0 +1,11 @@
+{
+  "name": "City Bloxxx",
+  "short_name": "Bloxxx",
+  "description": "Nokia-era tower stacking remake in the browser.",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#101217",
+  "theme_color": "#101217",
+  "icons": [{ "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }]
+}

@@ -1,0 +1,266 @@
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  background: radial-gradient(ellipse at 50% 30%, #2a3140 0%, #12151b 55%, #08090c 100%);
+  color: #cfd6df;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  overscroll-behavior: none;
+}
+
+#stage {
+  position: fixed;
+  inset: 0;
+  touch-action: none;
+}
+
+/* ---------- phone body (base 320 x 790, scaled by JS via --s) ---------- */
+.phone {
+  --s: 1;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 320px;
+  height: 790px;
+  transform: translate(-50%, -50%) scale(var(--s));
+  transform-origin: 50% 50%;
+  padding: 0 16px;
+  border-radius: 68px 68px 84px 84px;
+  background:
+    linear-gradient(90deg, rgba(255,255,255,.06), rgba(255,255,255,0) 18%, rgba(255,255,255,0) 82%, rgba(255,255,255,.05)),
+    linear-gradient(165deg, #343943 0%, #16191e 45%, #1c1f25 100%);
+  border: 4px solid #8f98a3;
+  box-shadow:
+    0 0 0 2px #4a5059,
+    inset 0 2px 6px rgba(255,255,255,.15),
+    inset 0 -4px 10px rgba(0,0,0,.6),
+    0 30px 60px rgba(0,0,0,.6);
+}
+
+.top {
+  height: 58px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+}
+.earpiece {
+  width: 72px;
+  height: 8px;
+  border-radius: 4px;
+  background: repeating-linear-gradient(90deg, #050607 0 3px, #2a2e35 3px 5px);
+  box-shadow: inset 0 1px 2px #000, 0 1px 0 rgba(255,255,255,.08);
+}
+.brand {
+  font: 700 11px/1 "Arial Black", system-ui, sans-serif;
+  letter-spacing: 4px;
+  color: #aeb7c2;
+  text-shadow: 0 1px 0 #000;
+}
+
+.bezel {
+  position: relative;
+  width: 288px;
+  margin: 0 auto;
+  padding: 12px;
+  border-radius: 18px;
+  background: linear-gradient(#0b0c0f, #050607);
+  box-shadow: inset 0 0 0 1px #2c3038, inset 0 3px 10px #000, 0 1px 0 rgba(255,255,255,.08);
+}
+#screen {
+  display: block;
+  width: 264px;
+  height: 312px;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  border-radius: 3px;
+  background: #000;
+  cursor: pointer;
+  touch-action: none;
+}
+.glare {
+  position: absolute;
+  inset: 12px;
+  border-radius: 3px;
+  pointer-events: none;
+  background: linear-gradient(155deg, rgba(255,255,255,.09) 0%, rgba(255,255,255,0) 38%);
+}
+
+/* ---------- buttons shared ---------- */
+button {
+  font: inherit;
+  color: inherit;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  touch-action: none;
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+}
+.soft, .call, .keypad button, .dpad {
+  background: linear-gradient(#f4f6f8, #c2c9d1);
+  box-shadow: inset 0 1px 0 #fff, 0 2px 0 #5f6770, 0 3px 4px rgba(0,0,0,.45);
+}
+.pressed,
+.soft:active, .call:active, .keypad button:active {
+  background: linear-gradient(#b9c0c8, #e3e7ec) !important;
+  box-shadow: inset 0 2px 3px rgba(0,0,0,.35), 0 1px 0 #5f6770 !important;
+  transform: translateY(1px);
+}
+
+/* ---------- navigation cluster ---------- */
+.nav {
+  display: grid;
+  grid-template-columns: 1fr 128px 1fr;
+  gap: 10px;
+  align-items: center;
+  margin-top: 16px;
+}
+.side {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.soft {
+  height: 30px;
+  border-radius: 15px;
+  display: grid;
+  place-items: center;
+}
+.soft i {
+  width: 22px;
+  height: 3px;
+  border-radius: 2px;
+  background: #4b525b;
+}
+.call {
+  height: 36px;
+  border-radius: 18px 18px 18px 18px;
+  display: grid;
+  place-items: center;
+}
+.call i {
+  width: 22px;
+  height: 9px;
+  border-radius: 9px 9px 3px 3px;
+}
+.call.green i { background: #1f9a3a; }
+.call.red i { background: #d0263a; transform: rotate(180deg); }
+
+.dpad {
+  position: relative;
+  width: 128px;
+  height: 128px;
+  border-radius: 50%;
+}
+.dpad .d {
+  position: absolute;
+  background: transparent;
+}
+.dpad .d::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 0;
+  height: 0;
+  border: 7px solid transparent;
+  transform: translate(-50%, -50%);
+}
+.dpad .up    { left: 34px; top: 0;     width: 60px; height: 38px; border-radius: 40px 40px 0 0; }
+.dpad .down  { left: 34px; bottom: 0;  width: 60px; height: 38px; border-radius: 0 0 40px 40px; }
+.dpad .left  { left: 0;    top: 34px;  width: 38px; height: 60px; border-radius: 40px 0 0 40px; }
+.dpad .right { right: 0;   top: 34px;  width: 38px; height: 60px; border-radius: 0 40px 40px 0; }
+.dpad .up::after    { border-bottom-color: #59616b; margin-top: -4px; }
+.dpad .down::after  { border-top-color: #59616b;    margin-top: 4px; }
+.dpad .left::after  { border-right-color: #59616b;  margin-left: -4px; }
+.dpad .right::after { border-left-color: #59616b;   margin-left: 4px; }
+.dpad .d.pressed,
+.dpad .d:active:not(.ok) {
+  background: rgba(0,0,0,.14) !important;
+  box-shadow: none !important;
+  transform: none;
+}
+.dpad .ok {
+  left: 40px;
+  top: 40px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: linear-gradient(#dfe4e9, #a9b1ba);
+  box-shadow: inset 0 1px 0 #fff, 0 0 0 3px #8b939c, 0 2px 4px rgba(0,0,0,.4);
+}
+.dpad .ok.pressed,
+.dpad .ok:active {
+  background: linear-gradient(#a9b1ba, #dfe4e9) !important;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,.4), 0 0 0 3px #8b939c !important;
+}
+
+/* ---------- keypad ---------- */
+.keypad {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 9px 12px;
+  margin-top: 18px;
+  padding: 0 4px;
+}
+.keypad button {
+  height: 44px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  color: #1b1e23;
+}
+.keypad b {
+  font: 700 19px/1 system-ui, sans-serif;
+}
+.keypad s {
+  text-decoration: none;
+  font: 600 9px/1 system-ui, sans-serif;
+  letter-spacing: .5px;
+  color: #59616b;
+  text-transform: uppercase;
+}
+.keypad .nub b {
+  position: relative;
+}
+.keypad .nub b::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -5px;
+  width: 6px;
+  height: 2px;
+  margin-left: -3px;
+  border-radius: 1px;
+  background: #59616b;
+}
+
+.hint {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 10px;
+  margin: 0;
+  text-align: center;
+  font-size: 12px;
+  letter-spacing: .3px;
+  color: #7d8794;
+  pointer-events: none;
+}
+@media (hover: none), (max-height: 520px) {
+  .hint { display: none; }
+}
